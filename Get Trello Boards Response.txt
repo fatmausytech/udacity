@@ -1,0 +1,111 @@
+{
+    "id": "62e53e4c4a6a053cafc1b9de",
+    "aaId": "62e53e489974783acc36193e",
+    "activityBlocked": false,
+    "avatarHash": "7defae96e20f4e9b924790a507db26bf",
+    "avatarUrl": "https://trello-members.s3.amazonaws.com/62e53e4c4a6a053cafc1b9de/7defae96e20f4e9b924790a507db26bf",
+    "bio": "",
+    "bioData": null,
+    "confirmed": true,
+    "fullName": "Fatma Ezzat",
+    "idEnterprise": null,
+    "idEnterprisesDeactivated": [],
+    "idMemberReferrer": null,
+    "idPremOrgsAdmin": [],
+    "initials": "OT",
+    "memberType": "normal",
+    "nonPublic": {},
+    "nonPublicAvailable": true,
+    "products": [],
+    "url": "https://trello.com/mjrxzpcagh",
+    "username": "mjrxzpcagh",
+    "status": "disconnected",
+    "aaBlockSyncUntil": null,
+    "aaEmail": null,
+    "aaEnrolledDate": null,
+    "avatarSource": "none",
+    "credentialsRemovedCount": 0,
+    "domainClaimed": null,
+    "email": "mjrxzpcagh@crossmailjet.com",
+    "goldSunsetFreeTrialIdOrganization": null,
+    "gravatarHash": "5e9a1eb78c8898899be78433cdffc730",
+    "idBoards": [
+        "62e591567a054b0a5bf2b609",
+        "62e5915ceb935d008b1e9144"
+    ],
+    "idOrganizations": [
+        "62e53ec25df59c51f21d9fed"
+    ],
+    "idEnterprisesAdmin": [],
+    "limits": {
+        "boards": {
+            "totalPerMember": {
+                "status": "ok",
+                "disableAt": 4500,
+                "warnAt": 3600
+            }
+        },
+        "orgs": {
+            "totalPerMember": {
+                "status": "ok",
+                "disableAt": 850,
+                "warnAt": 680
+            }
+        }
+    },
+    "loginTypes": [
+        "atlassian"
+    ],
+    "marketingOptIn": {
+        "optedIn": true,
+        "date": "2022-07-30T14:22:25.591Z"
+    },
+    "messagesDismissed": [],
+    "oneTimeMessagesDismissed": [
+        "sent-possible-new-signup-event",
+        "close-menu-of-first-board",
+        "62e53ec25df59c51f21d9fed-boardMenuMainCustomFieldsPromptFull",
+        "62e53ec25df59c51f21d9fed-boardMenuMoreCollectionsPromptFull",
+        "team-template-picker-62e53ec25df59c51f21d9fed"
+    ],
+    "prefs": {
+        "privacy": {
+            "fullName": "public",
+            "avatar": "public"
+        },
+        "sendSummaries": true,
+        "minutesBetweenSummaries": 60,
+        "minutesBeforeDeadlineToNotify": 1440,
+        "colorBlind": false,
+        "locale": "en-US"
+    },
+    "trophies": [],
+    "uploadedAvatarHash": null,
+    "uploadedAvatarUrl": null,
+    "premiumFeatures": [
+        "additionalBoardBackgrounds",
+        "additionalStickers",
+        "customBoardBackgrounds",
+        "customEmoji",
+        "customStickers",
+        "plugins"
+    ],
+    "isAaMastered": true,
+    "ixUpdate": "63",
+    "boards": [
+        {
+            "id": "62e5915ceb935d008b1e9144",
+            "name": "Test",
+            "closed": false,
+            "idOrganization": "62e53ec25df59c51f21d9fed",
+            "pinned": false
+        },
+        {
+            "id": "62e591567a054b0a5bf2b609",
+            "name": "Test 05",
+            "closed": false,
+            "idOrganization": "62e53ec25df59c51f21d9fed",
+            "pinned": false
+        }
+    ]
+}
