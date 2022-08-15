@@ -1,0 +1,495 @@
+{
+	"info": {
+		"_postman_id": "b68d863d-b7b4-4f0d-94b4-837a6d11a0b7",
+		"name": "01- Fatma Trello API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21886584"
+	},
+	"item": [
+		{
+			"name": "01- Creat New Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Check that permissionLevel = private\",function(){\r",
+							"    pm.expect(pm.response.json().prefs.permissionLevel).to.equal(\"private\")\r",
+							"});\r",
+							"pm.test(\"Check that canBePublic = true\",function(){\r",
+							"    pm.expect(pm.response.json().prefs.canBePublic).to.equal(true)\r",
+							"});\r",
+							"pm.test(\"Check that canInvite = true\",function(){\r",
+							"    pm.expect(pm.response.json().prefs.canInvite).to.equal(true)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}boards/?name=Test&key={{apiKey}}&token={{apiToken}}",
+					"host": [
+						"{{BaseURL}}boards"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Test"
+						},
+						{
+							"key": "key",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{apiToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "02- Get Number Of Open Boards",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Check that number of boards is greater than One\",function(){\r",
+							"    pm.expect(pm.response.json().idBoards.length).to.be.above(1)\r",
+							"});\r",
+							"pm.test(\"Check that number of boards is equal to One\",function(){\r",
+							"    pm.expect(pm.response.json().idBoards.length).to.be.equal(1)\r",
+							"});\r",
+							"//check if at least one board is exists\r",
+							"if(pm.response.json().idBoards.length>0)\r",
+							"{\r",
+							"    var boardsIDLength= pm.response.json().idBoards.length\r",
+							"    if(boardsIDLength == 1)\r",
+							"    {\r",
+							"        pm.globals.set(\"FirstBoardID\",pm.response.json().idBoards[0])\r",
+							"        pm.globals.set(\"LastBoardID\",pm.response.json().idBoards[0])\r",
+							"    }\r",
+							"    else\r",
+							"    {\r",
+							"        pm.globals.set(\"FirstBoardID\",pm.response.json().idBoards[0])\r",
+							"        pm.globals.set(\"LastBoardID\",pm.response.json().idBoards[boardsIDLength-1])\r",
+							"    }\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}members/me?boards=open&key={{apiKey}}&token={{apiToken}}",
+					"host": [
+						"{{BaseURL}}members"
+					],
+					"path": [
+						"me"
+					],
+					"query": [
+						{
+							"key": "boards",
+							"value": "open"
+						},
+						{
+							"key": "key",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{apiToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "03- Delete Latest Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response Body should contain a meaningful message\", function () {\r",
+							"    pm.expect(JSON.stringify(pm.response.json())).includes(\"board is removed successfully\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//check if there's boards before delete latest one\r",
+							"idBoardsLength=0\r",
+							"var url = pm.globals.get(\"BaseURL\")+\"members/me?boards=open&key=\"+pm.globals.get(\"apiKey\")+\"&token=\"+pm.globals.get(\"apiToken\");\r",
+							"var GetRequest = {\r",
+							"    url: url,\r",
+							"    method: 'GET',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/json'\r",
+							"    }\r",
+							"    };\r",
+							"    //Send request to get number of all available Boards\r",
+							"    pm.sendRequest(GetRequest, (error, response) => {\r",
+							"    console.log(error ? error : response.json());\r",
+							"    idBoardsLength=response.json().idBoards.length;\r",
+							"    if(idBoardsLength>0)\r",
+							"    {\r",
+							"        pm.request.url.variables.idx(0).value=response.json().idBoards[idBoardsLength-1]\r",
+							"    }\r",
+							"    else\r",
+							"    {\r",
+							"        throw new Error(\"No Boards To Delete\");\r",
+							"    }\r",
+							"    });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}boards/:id?key={{apiKey}}&token={{apiToken}}",
+					"host": [
+						"{{BaseURL}}boards"
+					],
+					"path": [
+						":id"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{apiToken}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "0",
+							"type": "string"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "04- Create a new List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Body Contain ID property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property(\"id\")\r",
+							"});\r",
+							"pm.test(\"Response Body Contain name property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property(\"name\")\r",
+							"});\r",
+							"pm.test(\"Response Body Contain idBoard property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property(\"idBoard\")\r",
+							"});\r",
+							"pm.test(\"Closed is false\", function () {\r",
+							"    pm.expect(pm.response.json().closed).equal(false)\r",
+							"});\r",
+							"pm.test(\"limits are empty object\", function () {\r",
+							"    pm.expect(JSON.stringify(pm.response.json().limits)).equal(\"{}\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//check if there's boards before creat list\r",
+							"idBoardsLength=0\r",
+							"var url = pm.globals.get(\"BaseURL\")+\"members/me?boards=open&key=\"+pm.globals.get(\"apiKey\")+\"&token=\"+pm.globals.get(\"apiToken\");\r",
+							"var GetRequest = {\r",
+							"    url: url,\r",
+							"    method: 'GET',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/json'\r",
+							"    }\r",
+							"    };\r",
+							"    //Send request to get number of all available Boards\r",
+							"    pm.sendRequest(GetRequest, (error, response) => {\r",
+							"    console.log(error ? error : response.json());\r",
+							"    idBoardsLength=response.json().idBoards.length;\r",
+							"    if(idBoardsLength>0)\r",
+							"    {\r",
+							"        pm.globals.set(\"BoardID\",response.json().idBoards[0])\r",
+							"    }\r",
+							"    else\r",
+							"    {\r",
+							"        throw new Error(\"No Boards To Add List To it\");\r",
+							"    }\r",
+							"    });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}lists?name=Test&idBoard={{BoardID}}&key={{apiKey}}&token={{apiToken}}",
+					"host": [
+						"{{BaseURL}}lists"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Test"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{BoardID}}"
+						},
+						{
+							"key": "key",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{apiToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "05- Get Lists on a Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Number of lists in the response is 3\", function () {\r",
+							"    pm.expect(pm.response.json().length).equal(3)\r",
+							"});\r",
+							"if(pm.response.json().length>0)\r",
+							"{\r",
+							"    var listsCount= pm.response.json().length\r",
+							"    pm.globals.set(\"FirstListID\",pm.response.json()[0].id)\r",
+							"    pm.globals.set(\"LastListID\",pm.response.json()[listsCount-1].id)\r",
+							"}\r",
+							"else\r",
+							"{\r",
+							"    throw new Error(\"No Lists Exits\");\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//check if there's boards before get lists on board\r",
+							"idBoardsLength=0\r",
+							"var url = pm.globals.get(\"BaseURL\")+\"members/me?boards=open&key=\"+pm.globals.get(\"apiKey\")+\"&token=\"+pm.globals.get(\"apiToken\");\r",
+							"var GetRequest = {\r",
+							"    url: url,\r",
+							"    method: 'GET',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/json'\r",
+							"    }\r",
+							"    };\r",
+							"    //Send request to get number of all available Boards\r",
+							"    pm.sendRequest(GetRequest, (error, response) => {\r",
+							"    console.log(error ? error : response.json());\r",
+							"    idBoardsLength=response.json().idBoards.length;\r",
+							"    if(idBoardsLength>0)\r",
+							"    {\r",
+							"        pm.request.url.variables.idx(0).value=response.json().idBoards[idBoardsLength-1]\r",
+							"    }\r",
+							"    else\r",
+							"    {\r",
+							"        throw new Error(\"No Lists Exits\");\r",
+							"    }\r",
+							"    });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}boards/:id/lists?key={{apiKey}}&token={{apiToken}}",
+					"host": [
+						"{{BaseURL}}boards"
+					],
+					"path": [
+						":id",
+						"lists"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{apiToken}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "06- Archive a list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"\\\"closed\\\" property is the same as \\\"value\\\" in path\", function () {\r",
+							"    pm.expect(pm.response.json().closed).equal(JSON.parse(pm.request.url.query.idx(2).value))\r",
+							"});\r",
+							"pm.test(\"Set-Cookie is present\", function () {\r",
+							"    pm.response.to.have.header(\"Set-Cookie\");\r",
+							"});\r",
+							"pm.test(\"Set-Cookie contain \\\"isEnterpriseAdmin%3Dfalse\\\"\", function () {\r",
+							"    pm.expect(pm.response.headers.get('Set-Cookie')).include(\"isEnterpriseAdmin%3Dfalse\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//check if there's boards before archive lists on board\r",
+							"idBoardsLength=0\r",
+							"ID=0;\r",
+							"var url = pm.globals.get(\"BaseURL\")+\"members/me?boards=open&key=\"+pm.globals.get(\"apiKey\")+\"&token=\"+pm.globals.get(\"apiToken\");\r",
+							"var url2=0;\r",
+							"var GetRequest1 = {\r",
+							"    url: url,\r",
+							"    method: 'GET',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/json'\r",
+							"    }\r",
+							"    };\r",
+							"    //Send request to get number of all available Boards\r",
+							"    pm.sendRequest(GetRequest1, (error, response) => {\r",
+							"    console.log(error ? error : response.json());\r",
+							"    idBoardsLength=response.json().idBoards.length;\r",
+							"    if(idBoardsLength>0)\r",
+							"    {\r",
+							"        ID=response.json().idBoards[idBoardsLength-1]\r",
+							"        url2 = pm.globals.get(\"BaseURL\")+\"boards/\"+ ID +\"/lists?key=\"+pm.globals.get(\"apiKey\")+\"&token=\"+pm.globals.get(\"apiToken\");\r",
+							"        var GetRequest2 = {\r",
+							"        url: url2,\r",
+							"        method: 'GET',\r",
+							"        header: {\r",
+							"            'Content-Type': 'application/json'\r",
+							"        }\r",
+							"        };\r",
+							"        //Send request to get number of all available Boards\r",
+							"        pm.sendRequest(GetRequest2, (error, responsee) => {\r",
+							"        console.log(error ? error : responsee.json());\r",
+							"        if(responsee.json().length>0)\r",
+							"        {\r",
+							"            pm.request.url.variables.idx(0).value=responsee.json()[0].id\r",
+							"        }\r",
+							"        else\r",
+							"        {\r",
+							"            throw new Error(\"No Lists Exits 1\");\r",
+							"        }\r",
+							"        });\r",
+							"        }\r",
+							"        else\r",
+							"        {\r",
+							"            throw new Error(\"No Lists Exits 2\");\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"\r",
+							"    "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}lists/:id/closed?key={{apiKey}}&token={{apiToken}}&value=true",
+					"host": [
+						"{{BaseURL}}lists"
+					],
+					"path": [
+						":id",
+						"closed"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{apiToken}}"
+						},
+						{
+							"key": "value",
+							"value": "true"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
