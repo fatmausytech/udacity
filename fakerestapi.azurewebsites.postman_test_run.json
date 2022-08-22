@@ -1,0 +1,227 @@
+{
+	"id": "fc1d0143-82f0-45b3-87e6-03dbaec1b21d",
+	"name": "fakerestapi.azurewebsites",
+	"timestamp": "2022-07-30T13:32:08.464Z",
+	"collection_id": "21886584-65cc7414-de47-4295-ba97-6c78de32ffeb",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 6,
+	"totalFail": 8,
+	"results": [
+		{
+			"id": "9d3daa4c-148d-44e0-97de-45741811558f",
+			"name": "01- GET Authors",
+			"url": "http://fakerestapi.azurewebsites.net/api/v1/Authors",
+			"time": 513,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Status is OK": true,
+				"Objects inside response contain, id, idBook, firstName, lastName.": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status is OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Objects inside response contain, id, idBook, firstName, lastName.": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				513
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Status is OK": true,
+					"Objects inside response contain, id, idBook, firstName, lastName.": true
+				}
+			]
+		},
+		{
+			"id": "db852118-3371-413a-8197-22a88460db5b",
+			"name": "02- POST Authors",
+			"url": "http://fakerestapi.azurewebsites.net/api/v1/Authors",
+			"time": 88,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Register a new valid Author successfully and response code 201": false,
+				"Status is Created": false,
+				"First name is should be mandatory (code = 400)": false,
+				"First name is should be mandatory (status = Bad Request)": false,
+				"last name is should be mandatory (code = 400)": false,
+				"Last name is should be mandatory (status = Bad Request)": false
+			},
+			"testPassFailCounts": {
+				"Register a new valid Author successfully and response code 201": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Status is Created": {
+					"pass": 0,
+					"fail": 1
+				},
+				"First name is should be mandatory (code = 400)": {
+					"pass": 0,
+					"fail": 1
+				},
+				"First name is should be mandatory (status = Bad Request)": {
+					"pass": 0,
+					"fail": 1
+				},
+				"last name is should be mandatory (code = 400)": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Last name is should be mandatory (status = Bad Request)": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				88
+			],
+			"allTests": [
+				{
+					"Register a new valid Author successfully and response code 201": false,
+					"Status is Created": false,
+					"First name is should be mandatory (code = 400)": false,
+					"First name is should be mandatory (status = Bad Request)": false,
+					"last name is should be mandatory (code = 400)": false,
+					"Last name is should be mandatory (status = Bad Request)": false
+				}
+			]
+		},
+		{
+			"id": "48b0e5ea-821a-4249-8006-dc54713808cf",
+			"name": "03- GET Books With Specific IDBook",
+			"url": "http://fakerestapi.azurewebsites.net/api/v1/Authors/authors/books/29",
+			"time": 87,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Searching with IdBook 29 should return relative data in response body": true
+			},
+			"testPassFailCounts": {
+				"Searching with IdBook 29 should return relative data in response body": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				87
+			],
+			"allTests": [
+				{
+					"Searching with IdBook 29 should return relative data in response body": true
+				}
+			]
+		},
+		{
+			"id": "835fa491-e1b9-46ed-99fc-5154d6abb33d",
+			"name": "04- Update Specific Author Data",
+			"url": "http://fakerestapi.azurewebsites.net//api/v1/Authors/15",
+			"time": 98,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Author's first name is updated successfully": true,
+				"Author's last name is updated successfully": true
+			},
+			"testPassFailCounts": {
+				"Author's first name is updated successfully": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Author's last name is updated successfully": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				98
+			],
+			"allTests": [
+				{
+					"Author's first name is updated successfully": true,
+					"Author's last name is updated successfully": true
+				}
+			]
+		},
+		{
+			"id": "456b95a9-81ff-4c86-9281-7d25ddcce04c",
+			"name": "05- GET Specfic Author After Update",
+			"url": "http://fakerestapi.azurewebsites.net/api/v1/Authors/15",
+			"time": 86,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Author's first name is updated successfully in GET": false,
+				"Author's last name is updated successfully in GET": false
+			},
+			"testPassFailCounts": {
+				"Author's first name is updated successfully in GET": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Author's last name is updated successfully in GET": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				86
+			],
+			"allTests": [
+				{
+					"Author's first name is updated successfully in GET": false,
+					"Author's last name is updated successfully in GET": false
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 872,
+	"collection": {
+		"requests": [
+			{
+				"id": "9d3daa4c-148d-44e0-97de-45741811558f",
+				"method": "GET"
+			},
+			{
+				"id": "db852118-3371-413a-8197-22a88460db5b",
+				"method": "POST"
+			},
+			{
+				"id": "48b0e5ea-821a-4249-8006-dc54713808cf",
+				"method": "GET"
+			},
+			{
+				"id": "835fa491-e1b9-46ed-99fc-5154d6abb33d",
+				"method": "PUT"
+			},
+			{
+				"id": "456b95a9-81ff-4c86-9281-7d25ddcce04c",
+				"method": "GET"
+			}
+		]
+	}
+}
