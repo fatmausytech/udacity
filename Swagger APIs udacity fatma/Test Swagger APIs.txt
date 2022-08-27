@@ -1,0 +1,78 @@
+Test fakerestapi.azurewebsites (Swagger) APIs:
+
+->GET /api/v1/Authors
+
+Test Case 1: Make sure the response is "200 OK".
+	API URL: GET /api/v1/Authors
+	Expected Result: Code= 200 & Status= "OK"
+	Actual Result: Code= 200 & Status= "OK"
+	Status: Pass
+--------------------------------------------------------------------------
+Test Case 2: Check if objects inside response contain, id, idBook, firstName, lastName.
+	API URL: GET /api/v1/Authors
+	Expected Result: Objects inside response contain, id, idBook, firstName, lastName.
+	Actual Result: Objects inside response contain, id, idBook, firstName, lastName.
+	Status: Pass
+--------------------------------------------------------------------------
+Test Case 3: Check if objects inside response contain, id, idBook, firstName, lastName.
+	API URL: GET /api/v1/Authors
+	Expected Result: Objects inside response contain, id, idBook, firstName, lastName.
+	Actual Result: Objects inside response contain, id, idBook, firstName, lastName.
+	Status: Pass
+►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄
+->POST /api/v1/Authors
+
+Test Case 1: Register a new valid Author successfully and response code "201 Created".
+	API URL: POST /api/v1/Authors
+	Expected Result: Code= 201 & Status= "Created"
+	Actual Result: Code= 201 & Status= "Created"
+	Status: Fail
+--------------------------------------------------------------------------
+Test Case 2: firstname should be mandatory.
+	API URL: POST /api/v1/Authors
+	Expected Result: Code= 400 & Status= "Bad Request"
+	Actual Result: Code= 400 & Status= "Bad Request"
+	Status: Fail
+--------------------------------------------------------------------------
+Test Case 3: lastname should be mandatory.
+	API URL: POST /api/v1/Authors
+	Expected Result: Code= 400 & Status= "Bad Request"
+	Actual Result: Code= 400 & Status= "Bad Request"
+	Status: Fail
+►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄
+->GET api/v1/Authors/authors/books/{{IdBook}}
+
+Test Case 1: Response body all element has the correct {{IdBook}}
+	API URL: GET api/v1/Authors/authors/books/{{IdBook}}
+	Expected Result: Response body all element has the correct {{IdBook}}
+	Actual Result: Response body all element has the correct {{IdBook}}
+	Status: Pass
+*Note: {{IdBook}} is global variable and it's a random ID from available IDs
+►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄
+->PUT /api/v1/Authors/{{AuthorID}}
+
+Test Case 1: Author's first name is updated successfully
+	API URL: PUT /api/v1/Authors/{{AuthorID}}
+	Expected Result: Author's first name is updated successfully
+	Actual Result: Author's first name is updated successfully
+	Status: Pass
+--------------------------------------------------------------------------
+Test Case 2: Author's last name is updated successfully
+	API URL: PUT /api/v1/Authors/{{AuthorID}}
+	Expected Result: Author's last name is updated successfully
+	Actual Result: Author's last name is updated successfully
+	Status: Pass
+►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄
+->GET api/v1/Authors/{{AuthorID}}
+
+Test Case 1: Author's first name is updated successfully in GET
+	API URL: GET api/v1/Authors/{{AuthorID}}
+	Expected Result: Author's first name is updated successfully in GET
+	Actual Result: Author's first name does NOT updated successfully in GET
+	Status: Fail
+--------------------------------------------------------------------------
+Test Case 2: Author's last name is updated successfully in GET
+	API URL: GET api/v1/Authors/{{AuthorID}}
+	Expected Result: Author's last name is updated successfully in GET
+	Actual Result: Author's last name does NOT updated successfully in GET
+	Status: Fail

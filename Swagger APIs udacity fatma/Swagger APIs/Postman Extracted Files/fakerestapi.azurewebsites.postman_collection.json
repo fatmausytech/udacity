@@ -1,0 +1,338 @@
+{
+	"info": {
+		"_postman_id": "65cc7414-de47-4295-ba97-6c78de32ffeb",
+		"name": "fakerestapi.azurewebsites",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21886584"
+	},
+	"item": [
+		{
+			"name": "Authors",
+			"item": [
+				{
+					"name": "01- GET Authors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseLength=(pm.response.json()).length;\r",
+									"//Test Case 01\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status is OK\", function () {\r",
+									"    pm.expect(pm.response.status).equal(\"OK\")\r",
+									"});\r",
+									"/*------------------------------------------------------------------------------*/\r",
+									"//Test Case 02\r",
+									"pm.test(\"Objects inside response contain, id, idBook, firstName, lastName.\", function () {\r",
+									"    for(var x=0;x<responseLength;x++)\r",
+									"    {\r",
+									"        pm.expect(pm.response.json()[x]).to.have.property('id')\r",
+									"        pm.expect(pm.response.json()[x]).to.have.property('idBook')\r",
+									"        pm.expect(pm.response.json()[x]).to.have.property('firstName')\r",
+									"        pm.expect(pm.response.json()[x]).to.have.property('lastName')\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}api/v1/Authors",
+							"host": [
+								"{{BaseURL}}api"
+							],
+							"path": [
+								"v1",
+								"Authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02- POST Authors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Test Case 01\r",
+									"pm.test(\"Register a new valid Author successfully and response code 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Status is Created\", function () {\r",
+									"    pm.expect(pm.response.status).equal(\"Created\")\r",
+									"});\r",
+									"/*------------------------------------------------------------------------------*/\r",
+									"//Test Case 02\r",
+									"//Build request without first name\r",
+									"var url = pm.globals.get(\"BaseURL\")+\"api/v1/Authors\";\r",
+									"const postRequest1 = {\r",
+									"  url: url,\r",
+									"  method: 'POST',\r",
+									"  header: {\r",
+									"    'Content-Type': 'application/json'\r",
+									"  },\r",
+									"  body: {\r",
+									"    mode: 'raw',\r",
+									"    raw: JSON.stringify({ \r",
+									"    \"id\": 99,\r",
+									"    \"idBook\": 55,\r",
+									"    \"lastName\": \"Tarek\" })\r",
+									"  }\r",
+									"};\r",
+									"//Send request without first name\r",
+									"pm.sendRequest(postRequest1, (error, response) => {\r",
+									"console.log(error ? error : response.json());\r",
+									"/*►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄*/\r",
+									"            //Check if reuest fail (Actual Test Case)\r",
+									"/*►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄*/\r",
+									"pm.test(\"First name is should be mandatory (code = 400)\", function () {\r",
+									"    pm.expect(response.code).equal(400)\r",
+									"});\r",
+									"pm.test(\"First name is should be mandatory (status = Bad Request)\", function () {\r",
+									"    pm.expect(response.status).equal(\"Bad Request\")\r",
+									"});\r",
+									"});\r",
+									"/*------------------------------------------------------------------------------*/\r",
+									"//Test Case 03\r",
+									"//Build request without last name\r",
+									"const postRequest2 = {\r",
+									"  url: url,\r",
+									"  method: 'POST',\r",
+									"  header: {\r",
+									"    'Content-Type': 'application/json'\r",
+									"  },\r",
+									"  body: {\r",
+									"    mode: 'raw',\r",
+									"    raw: JSON.stringify({ \r",
+									"    \"id\": 100,\r",
+									"    \"idBook\": 165,\r",
+									"    \"firstName\": \"Omar\" })\r",
+									"  }\r",
+									"};\r",
+									"//Send request without last name\r",
+									"pm.sendRequest(postRequest2, (error, response) => {\r",
+									"console.log(error ? error : response.json());\r",
+									"/*►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄*/\r",
+									"            //Check if reuest fail (Actual Test Case)\r",
+									"/*►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄►◄*/\r",
+									"pm.test(\"last name is should be mandatory (code = 400)\", function () {\r",
+									"    pm.expect(response.code).equal(400)\r",
+									"});\r",
+									"pm.test(\"Last name is should be mandatory (status = Bad Request)\", function () {\r",
+									"    pm.expect(response.status).equal(\"Bad Request\")\r",
+									"});\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 39,\r\n  \"idBook\": 44,\r\n  \"firstName\": \"Omar\",\r\n  \"lastName\": \"Tarek\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}api/v1/Authors",
+							"host": [
+								"{{BaseURL}}api"
+							],
+							"path": [
+								"v1",
+								"Authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03- GET Books With Specific IDBook",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"/*Send Get Request First To Get All Available Books ID*/\r",
+									"/*************************************************/\r",
+									"//filter function to get unique elments from array\r",
+									"function onlyUnique(value, index, self) {\r",
+									"  return self.indexOf(value) === index;\r",
+									"}\r",
+									"var url = pm.globals.get(\"BaseURL\")+\"api/v1/Authors\";\r",
+									"var allAvailableIds=[];\r",
+									"var uniqueAvailableIds=[];\r",
+									"//build get request\r",
+									"const GetRequest = {\r",
+									"  url: url,\r",
+									"  method: 'GET',\r",
+									"  header: {\r",
+									"    'Content-Type': 'application/json'\r",
+									"  }\r",
+									"};\r",
+									"//Send request to get all available IDs\r",
+									"pm.sendRequest(GetRequest, (error, response) => {\r",
+									"console.log(error ? error : response.json());\r",
+									"//Start store all IDs coming\r",
+									"for(var x=0;x<(response.json()).length;x++)\r",
+									"    {\r",
+									"        allAvailableIds.push(response.json()[x].idBook);\r",
+									"    }\r",
+									"    //Get only unique IDs\r",
+									"    uniqueAvailableIds=allAvailableIds.filter(onlyUnique);\r",
+									"    var length=uniqueAvailableIds.length;\r",
+									"    //Get random unique ID and assign it to the global variable IdBook\r",
+									"    pm.globals.set(\"IdBook\",Math.floor(Math.random() * (length)))\r",
+									"    console.log(pm.globals.get(\"IdBook\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var testCaseTitle= String (\"Searching with IdBook \" +pm.globals.get(\"IdBook\")+\" should return relative data in response body\")\r",
+									"pm.test(testCaseTitle, function () {\r",
+									"for(var x=0;x<(pm.response.json()).length;x++)\r",
+									"    {\r",
+									"        pm.expect(pm.response.json()[x].idBook).to.equal(pm.globals.get(\"IdBook\"))\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}api/v1/Authors/authors/books/{{IdBook}}",
+							"host": [
+								"{{BaseURL}}api"
+							],
+							"path": [
+								"v1",
+								"Authors",
+								"authors",
+								"books",
+								"{{IdBook}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04- Update Specific Author Data",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Author's first name is updated successfully\", function(){\r",
+									"    pm.expect(pm.response.json().firstName).equal(JSON.parse(pm.request.body).firstName)\r",
+									"});\r",
+									"pm.test(\"Author's last name is updated successfully\", function(){\r",
+									"    pm.expect(pm.response.json().lastName).equal(JSON.parse(pm.request.body).lastName)\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": {{AuthorID}},\r\n  \"idBook\": 0,\r\n  \"firstName\": {{firstName}},\r\n  \"lastName\": {{lastName}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/api/v1/Authors/{{AuthorID}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Authors",
+								"{{AuthorID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "05- GET Specfic Author After Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Author's first name is updated successfully in GET\", function(){\r",
+									"    pm.expect(pm.response.json().firstName).equal(pm.globals.get(\"firstName\"))\r",
+									"});\r",
+									"pm.test(\"Author's last name is updated successfully in GET\", function(){\r",
+									"    pm.expect(pm.response.json().firstName).equal(pm.globals.get(\"lastName\"))\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}api/v1/Authors/{{AuthorID}}",
+							"host": [
+								"{{BaseURL}}api"
+							],
+							"path": [
+								"v1",
+								"Authors",
+								"{{AuthorID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
